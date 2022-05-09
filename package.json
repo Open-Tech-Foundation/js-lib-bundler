@@ -1,0 +1,32 @@
+{
+  "name": "lib-bundler",
+  "version": "0.1.0",
+  "description": "The JavaScript library bundler.",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/bundler.cjs",
+  "types": "dist/types.d.ts",
+  "bin": {
+    "bundle": "./bundle.js"
+  },
+  "scripts": {
+    "build": "parcel build"
+  },
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "@parcel/packager-ts": "2.5.0",
+    "@parcel/transformer-typescript-types": "2.5.0",
+    "@types/babel__traverse": "^7.17.1",
+    "@types/node": "^17.0.31",
+    "parcel": "^2.5.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.17.10",
+    "@babel/traverse": "^7.17.10",
+    "@babel/types": "^7.17.10"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  }
+}
