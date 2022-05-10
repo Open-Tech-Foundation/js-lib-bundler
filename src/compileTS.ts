@@ -1,4 +1,4 @@
-import ts from "typescript";
+import ts from 'typescript';
 
 export default function compileTS(fileNames: string, options = {}) {
   const currentOptions: ts.CompilerOptions = {
@@ -6,7 +6,7 @@ export default function compileTS(fileNames: string, options = {}) {
     strict: true,
     target: ts.ScriptTarget.ESNext,
     module: ts.ModuleKind.ESNext,
-    outDir: "./lib",
+    outDir: './lib',
     skipLibCheck: true,
     moduleResolution: ts.ModuleResolutionKind.NodeJs,
     allowSyntheticDefaultImports: true,
@@ -35,18 +35,18 @@ export default function compileTS(fileNames: string, options = {}) {
       );
       const message = ts.flattenDiagnosticMessageText(
         diagnostic.messageText,
-        "\n"
+        '\n'
       );
 
       console.error(
         `${diagnostic.file.fileName} (${line + 1},${
           character + 1
         }): ${message}`,
-        "\n"
+        '\n'
       );
     } else {
       console.log(
-        ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+        ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n')
       );
     }
   });

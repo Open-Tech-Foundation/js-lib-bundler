@@ -1,15 +1,15 @@
-import { writeFileSync } from "fs";
-import astWalk from "./astWalk";
-import compileTS from "./compileTS";
-import parseJS from "./parseJS";
+import { writeFileSync } from 'fs';
+import astWalk from './astWalk';
+import compileTS from './compileTS';
+import parseJS from './parseJS';
 
 export default function bundler(pkg: Record<string, unknown>) {
-  console.log("Compiling TypeScript");
+  console.log('Compiling TypeScript');
 
   const emitSkipped = compileTS(pkg.source as string);
 
   if (emitSkipped) {
-    throw new Error("TypeScript compiling failed.");
+    throw new Error('TypeScript compiling failed.');
   }
 
   const { ast, code } = parseJS(pkg.source as string);

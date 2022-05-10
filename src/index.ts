@@ -1,3 +1,3 @@
-import bundler from "./bundler";
+import bundler from './bundler';
 
 export { bundler };
