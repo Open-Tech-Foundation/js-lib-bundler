@@ -18,5 +18,5 @@ export default function bundler(pkg: Record<string, unknown>) {
 
   const output = parse(pkg.source as string);
 
-  writeFileSync(join(process.cwd(), pkg.module as string), output);
+  writeFileSync(join(process.cwd(), pkg.exports as string), output);
 }
