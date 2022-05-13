@@ -10,7 +10,8 @@
     "bundle": "./bundle.js"
   },
   "scripts": {
-    "build": "parcel build"
+    "build": "parcel build",
+    "test": "jest"
   },
   "packageManager": "yarn@3.2.0",
   "devDependencies": {
