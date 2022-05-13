@@ -1,25 +1,28 @@
+import { join } from 'path';
 import ts from 'typescript';
 
-export default function compileTS(fileNames: string, options = {}) {
+export default function compileTS(source: string, options = {}) {
   const currentOptions: ts.CompilerOptions = {
     noEmitOnError: true,
     strict: true,
     target: ts.ScriptTarget.ESNext,
     module: ts.ModuleKind.ESNext,
-    outDir: './lib',
+    outDir: '.bundler',
     skipLibCheck: true,
     moduleResolution: ts.ModuleResolutionKind.NodeJs,
     allowSyntheticDefaultImports: true,
+    allowJs: true,
   };
 
-  const defaultCompilerHost = ts.createCompilerHost({});
+  const host = ts.createCompilerHost(currentOptions);
+  host.getCurrentDirectory = () => process.cwd();
+  host.writeFile = (fileName: string, data: string) => {
+    return ts.sys.writeFile(join(process.cwd(), fileName), data);
+  };
   const program = ts.createProgram(
-    [fileNames],
-    {
-      ...currentOptions,
-      ...options,
-    },
-    defaultCompilerHost
+    [join(process.cwd(), source)],
+    currentOptions,
+    host
   );
   const emitResult = program.emit();
 
@@ -37,12 +40,8 @@ export default function compileTS(fileNames: string, options = {}) {
         diagnostic.messageText,
         '\n'
       );
-
-      console.error(
-        `${diagnostic.file.fileName} (${line + 1},${
-          character + 1
-        }): ${message}`,
-        '\n'
+      console.log(
+        `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
       );
     } else {
       console.log(
