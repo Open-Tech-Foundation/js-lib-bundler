@@ -1,7 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Bundler Single JS file with a function & named export 1`] = `
+"function a() {
+    return \\"Hello World!\\";
+}
+export { a };
+"
+`;
+
+exports[`Bundler Single JS file with a function & seperate default exp 1`] = `
+"function a() {
+    return \\"Hello World!\\";
+}
+export default a;
+"
+`;
+
+exports[`Bundler Single JS file with a function 1`] = `
+"\\"use strict\\";
+function a() { return \\"Hello World!\\"; }
+"
+`;
+
 exports[`Bundler Single JS file with an expression 1`] = `
 "\\"use strict\\";
 console.log(\\"Hello World!\\");
+"
+`;
+
+exports[`Bundler Single JS file with export default function 1`] = `
+"export default function a() { return \\"Hello World!\\"; }
 "
 `;

@@ -24,4 +24,58 @@ describe('Bundler', () => {
     });
     expect(output).toMatchSnapshot();
   });
+
+  test('Single JS file with a function', () => {
+    jsonToFiles(tempDir, {
+      'a.js': `function a() { return "Hello World!" }`,
+    });
+    bundler({ source: 'a.js', exports: './main.js' });
+    const output = readFileSync(join(tempDir, 'main.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test('Single JS file with export default function', () => {
+    jsonToFiles(tempDir, {
+      'a.js': `export default function a() { return "Hello World!" }`,
+    });
+    bundler({ source: 'a.js', exports: './main.js' });
+    const output = readFileSync(join(tempDir, 'main.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test('Single JS file with a function & seperate default exp', () => {
+    jsonToFiles(tempDir, {
+      'a.js': `function a() { 
+        return "Hello World!" 
+      }
+      
+      export default a
+      `,
+    });
+    bundler({ source: 'a.js', exports: './main.js' });
+    const output = readFileSync(join(tempDir, 'main.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test('Single JS file with a function & named export', () => {
+    jsonToFiles(tempDir, {
+      'a.js': `function a() { 
+        return "Hello World!" 
+      }
+      
+      export {a}
+      `,
+    });
+    bundler({ source: 'a.js', exports: './main.js' });
+    const output = readFileSync(join(tempDir, 'main.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
 });
