@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Bundler Single JS file with a const & function export 1`] = `
+"export const name = 'square';
+export function draw(ctx, length, x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, length, length);
+    return {
+        length: length,
+        x: x,
+        y: y,
+        color: color
+    };
+}
+"
+`;
+
 exports[`Bundler Single JS file with a function & named export 1`] = `
 "function a() {
     return \\"Hello World!\\";
@@ -30,5 +45,23 @@ console.log(\\"Hello World!\\");
 
 exports[`Bundler Single JS file with export default function 1`] = `
 "export default function a() { return \\"Hello World!\\"; }
+"
+`;
+
+exports[`Bundler import a const from a JS file in another 1`] = `
+"const CONSTANT = 1.0;
+export default function main() {
+    console.log(CONSTANT);
+}
+"
+`;
+
+exports[`Bundler import default function from a JS file in another 1`] = `
+"function a() {
+    console.log(\\"From a\\");
+}
+export default function main() {
+    a();
+}
 "
 `;

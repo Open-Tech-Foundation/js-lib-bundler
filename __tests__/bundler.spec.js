@@ -16,10 +16,10 @@ beforeEach(() => {
 describe('Bundler', () => {
   test('Single JS file with an expression', () => {
     jsonToFiles(tempDir, {
-      'a.js': `console.log("Hello World!")`,
+      'module.js': `console.log("Hello World!")`,
     });
-    bundler({ source: 'a.js', exports: './main.js' });
-    const output = readFileSync(join(tempDir, 'main.js'), {
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
     expect(output).toMatchSnapshot();
@@ -27,10 +27,10 @@ describe('Bundler', () => {
 
   test('Single JS file with a function', () => {
     jsonToFiles(tempDir, {
-      'a.js': `function a() { return "Hello World!" }`,
+      'module.js': `function a() { return "Hello World!" }`,
     });
-    bundler({ source: 'a.js', exports: './main.js' });
-    const output = readFileSync(join(tempDir, 'main.js'), {
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
     expect(output).toMatchSnapshot();
@@ -38,10 +38,10 @@ describe('Bundler', () => {
 
   test('Single JS file with export default function', () => {
     jsonToFiles(tempDir, {
-      'a.js': `export default function a() { return "Hello World!" }`,
+      'module.js': `export default function a() { return "Hello World!" }`,
     });
-    bundler({ source: 'a.js', exports: './main.js' });
-    const output = readFileSync(join(tempDir, 'main.js'), {
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
     expect(output).toMatchSnapshot();
@@ -49,15 +49,15 @@ describe('Bundler', () => {
 
   test('Single JS file with a function & seperate default exp', () => {
     jsonToFiles(tempDir, {
-      'a.js': `function a() { 
+      'module.js': `function a() { 
         return "Hello World!" 
       }
       
       export default a
       `,
     });
-    bundler({ source: 'a.js', exports: './main.js' });
-    const output = readFileSync(join(tempDir, 'main.js'), {
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
     expect(output).toMatchSnapshot();
@@ -65,15 +65,73 @@ describe('Bundler', () => {
 
   test('Single JS file with a function & named export', () => {
     jsonToFiles(tempDir, {
-      'a.js': `function a() { 
+      'module.js': `function a() { 
         return "Hello World!" 
       }
       
       export {a}
       `,
     });
-    bundler({ source: 'a.js', exports: './main.js' });
-    const output = readFileSync(join(tempDir, 'main.js'), {
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test('Single JS file with a const & function export', () => {
+    jsonToFiles(tempDir, {
+      'module.js': `export const name = 'square';
+
+      export function draw(ctx, length, x, y, color) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, length, length);
+      
+        return {
+          length: length,
+          x: x,
+          y: y,
+          color: color
+        };
+      }      
+      `,
+    });
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test.only('import default function from a JS file in another', () => {
+    jsonToFiles(tempDir, {
+      'module.js': `import a from './a';
+      
+      export default function main() {
+        a()
+      }`,
+      'a.js': `export default function a() {
+        console.log("From a")
+      }`,
+    });
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
+      encoding: 'utf-8',
+    });
+    expect(output).toMatchSnapshot();
+  });
+
+  test('import a const from a JS file in another', () => {
+    jsonToFiles(tempDir, {
+      'module.js': `import {CONSTANT} from './a';
+      
+      export default function main() {
+        console.log(CONSTANT)
+      }`,
+      'a.js': `export const CONSTANT = 1.0`,
+    });
+    bundler({ source: 'module.js', exports: './bundle.js' });
+    const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
     expect(output).toMatchSnapshot();

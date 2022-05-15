@@ -1,6 +1,6 @@
 import traverse from '@babel/traverse';
-import parseJS from './parseJS';
 import { Node } from '@babel/types';
+import modulesImporter from './modulesImporter';
 
 export default function astWalk(ast: Node, code: string, isSource = false) {
   let output = '';
@@ -23,12 +23,7 @@ export default function astWalk(ast: Node, code: string, isSource = false) {
         path.skip();
       } else if (path.isImportDeclaration()) {
         if (path.node.source.value.startsWith('.')) {
-          path.node.specifiers.forEach(() => {
-            const { ast: newAST, code: newCode } = parseJS(
-              path.node.source.value + '.js'
-            );
-            output += astWalk(newAST, newCode);
-          });
+          output += modulesImporter(path) + '\n';
         } else {
           output +=
             code.slice(path.node.start as number, path.node.end as number) +

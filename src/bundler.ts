@@ -2,7 +2,7 @@ import { writeFileSync } from 'fs';
 import { join } from 'path';
 
 import compileTS from './compileTS';
-import parse from './parse';
+import optimizer from './optimizer';
 
 export default function bundler(pkg: Record<string, unknown>) {
   console.log('Compiling TypeScript');
@@ -16,7 +16,7 @@ export default function bundler(pkg: Record<string, unknown>) {
 
   console.log('TypeScript compilation done!');
 
-  const output = parse(pkg.source as string);
+  const output = optimizer(pkg.source as string);
 
   writeFileSync(join(process.cwd(), pkg.exports as string), output);
 }
