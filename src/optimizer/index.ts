@@ -1,12 +1,15 @@
 import { basename } from 'path';
-import astWalk from './astWalk';
+import concatModules from './concatModules';
 import parseJS from './parseJS';
 
 export default function optimizer(source: string) {
   const baseSourceFileName = basename(source);
   const compiledSource = baseSourceFileName.replace(/\.ts$/, '.js');
   const { ast, code } = parseJS(compiledSource);
-  const output = astWalk(ast, code, true);
+  const idMap = new Map();
+  const output = concatModules(ast, code, idMap, true);
+
+  console.log(idMap);
 
   return output;
 }
