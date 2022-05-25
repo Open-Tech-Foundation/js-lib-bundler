@@ -1,67 +1,112 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Bundler Single JS file with a const & function export 1`] = `
-"export const name = 'square';
-export function draw(ctx, length, x, y, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, y, length, length);
-    return {
-        length: length,
-        x: x,
-        y: y,
-        color: color
-    };
+exports[`Bundler A js file with a const & a function export 1`] = `
+"const _name_e027e0141e62 = 'square';
+export { _name_e027e0141e62 as name };
+
+function _draw_e47883ab76bb(ctx, length, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, length, length);
+  return {
+    length: length,
+    x: x,
+    y: y,
+    color: color
+  };
 }
+
+export { _draw_e47883ab76bb as draw };
 "
 `;
 
-exports[`Bundler Single JS file with a function & named export 1`] = `
-"function a() {
-    return \\"Hello World!\\";
+exports[`Bundler A js file with a function & a default exp 1`] = `
+"function _a_e027e0141e62() {
+  return \\"Hello World!\\";
 }
-export { a };
+
+export default _a_e027e0141e62;
 "
 `;
 
-exports[`Bundler Single JS file with a function & seperate default exp 1`] = `
-"function a() {
-    return \\"Hello World!\\";
+exports[`Bundler A js file with a function & named export 1`] = `
+"function _a_e027e0141e62() {
+  return \\"Hello World!\\";
 }
-export default a;
+
+export { _a_e027e0141e62 as a };
 "
 `;
 
-exports[`Bundler Single JS file with a function 1`] = `
+exports[`Bundler A js file with a function 1`] = `
 "\\"use strict\\";
-function a() { return \\"Hello World!\\"; }
+
+function _greet_e027e0141e62() {
+  return \\"Hello World!\\";
+}
 "
 `;
 
-exports[`Bundler Single JS file with an expression 1`] = `
+exports[`Bundler A js file with an export default function 1`] = `
+"function _a_e027e0141e62() {
+  return \\"Hello World!\\";
+}
+
+export { _a_e027e0141e62 as default };
+"
+`;
+
+exports[`Bundler A js file with an expression 1`] = `
 "\\"use strict\\";
+
 console.log(\\"Hello World!\\");
 "
 `;
 
-exports[`Bundler Single JS file with export default function 1`] = `
-"export default function a() { return \\"Hello World!\\"; }
+exports[`Bundler import a const from a module 1`] = `
+"const _CONSTANT_e47883ab76bb = 1.0;
+function _main_e027e0141e62() {
+  console.log(_CONSTANT_e47883ab76bb);
+}
+
+export { _main_e027e0141e62 as default };
 "
 `;
 
-exports[`Bundler import a const from a JS file in another 1`] = `
-"const CONSTANT = 1.0;
-export default function main() {
-    console.log(CONSTANT);
+exports[`Bundler import a const from multiple constants file 1`] = `
+"const _MY_STRING_e47883ab76bb = 'STRING';
+
+function _main_e027e0141e62() {
+  console.log(_MY_STRING_e47883ab76bb);
+}
+
+export { _main_e027e0141e62 as default };"
+`;
+
+exports[`Bundler import a const made of variables imported from another file 1`] = `
+"export default function main() {
+    console.log(MY_STRING);
 }
 "
 `;
 
-exports[`Bundler import default function from a JS file in another 1`] = `
-"function a() {
-    console.log(\\"From a\\");
+exports[`Bundler import a function from a module 1`] = `
+"function _add_30b69bcb814b(a, b) {
+  return a + b;
 }
-export default function main() {
-    a();
+console.log(_add_30b69bcb814b(2, 3));
+"
+`;
+
+exports[`Bundler import two consts from a module 1`] = `
+"const _MY_OBJECT_21825c70e8a0 = {
+  key: 'value'
+};
+const _MY_ARRAY_e027e0141e62 = ['a', 'b'];
+function _main_e47883ab76bb() {
+  console.log(_MY_OBJECT_21825c70e8a0);
+  console.log(_MY_ARRAY_e027e0141e62);
 }
+
+export { _main_e47883ab76bb as default };
 "
 `;
