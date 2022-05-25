@@ -8,11 +8,12 @@ function replaceFixedUID(str) {
 
   console.log(str);
 
-  const matchedUIDs = new RegExp(/_(?:.*)_([0-9a-z]{12})/).exec(str);
+  const regexp = new RegExp(/_(?:.*)_([0-9a-z]{12})/g);
+  const matchArr = [...str.matchAll(regexp)];
+  const matchedUIDs = matchArr.map((arr) => arr[1]);
   let uidSet;
   if (matchedUIDs) {
     uidSet = new Set(matchedUIDs.slice(1));
-    console.log(uidSet);
   }
 
   let count = 0;
