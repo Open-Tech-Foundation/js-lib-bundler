@@ -5,7 +5,6 @@
   "license": "MIT",
   "source": "src/index.ts",
   "main": "dist/bundler.cjs",
-  "types": "false",
   "bin": {
     "bundle": "./bundle.js"
   },

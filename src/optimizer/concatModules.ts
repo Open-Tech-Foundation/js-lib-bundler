@@ -40,7 +40,10 @@ export default function concatModules(
           const mapKey = resolve(dirname(modulePath), importPath);
 
           const idMapObj = idMap.get(mapKey) as Record<string, string>;
-          binding.scope.rename(id, idMapObj[binding.path.node.imported.name]);
+          const idMapKey = binding.path.node.imported
+            ? binding.path.node.imported.name
+            : 'default';
+          binding.scope.rename(id, idMapObj[idMapKey]);
         } else {
           binding.scope.rename(id, `_${id}_${randomUUID().slice(-12)}`);
         }
@@ -56,7 +59,9 @@ export default function concatModules(
         const localName = (s as ExportNamespaceSpecifier).local.name;
         idMapObj[exportedName] = localName;
       });
-      path.remove();
+      if (!isSource) {
+        path.remove();
+      }
     },
   });
 
