@@ -39,10 +39,6 @@ export { _a_e027e0141e62 as a };
 
 exports[`Bundler A js file with a function 1`] = `
 "\\"use strict\\";
-
-function _greet_e027e0141e62() {
-  return \\"Hello World!\\";
-}
 "
 `;
 
@@ -63,50 +59,74 @@ console.log(\\"Hello World!\\");
 `;
 
 exports[`Bundler import a const from a module 1`] = `
-"const _CONSTANT_e47883ab76bb = 1.0;
-function _main_e027e0141e62() {
-  console.log(_CONSTANT_e47883ab76bb);
+"const _CONSTANT_e027e0141e62 = 1.0;
+
+function _main_e47883ab76bb() {
+  console.log(_CONSTANT_e027e0141e62);
 }
 
-export { _main_e027e0141e62 as default };
+export { _main_e47883ab76bb as default };
 "
 `;
 
 exports[`Bundler import a const from multiple constants file 1`] = `
-"const _MY_STRING_e47883ab76bb = 'STRING';
+"const _MY_STRING_e027e0141e62 = 'STRING';
 
-function _main_e027e0141e62() {
-  console.log(_MY_STRING_e47883ab76bb);
+function _main_e47883ab76bb() {
+  console.log(_MY_STRING_e027e0141e62);
 }
 
-export { _main_e027e0141e62 as default };"
-`;
-
-exports[`Bundler import a const made of variables imported from another file 1`] = `
-"export default function main() {
-    console.log(MY_STRING);
-}
+export { _main_e47883ab76bb as default };
 "
 `;
 
-exports[`Bundler import a function from a module 1`] = `
-"function _add_30b69bcb814b(a, b) {
+exports[`Bundler import a const made of variables from a module 1`] = `
+"const _x_e027e0141e62 = 1;
+const _y_e47883ab76bb = 2;
+
+const _z_21825c70e8a0 = _x_e027e0141e62 + _y_e47883ab76bb;
+
+function _main_6353e21f1574() {
+  console.log(_z_21825c70e8a0);
+}
+
+export { _main_6353e21f1574 as default };
+"
+`;
+
+exports[`Bundler import a named function from a module 1`] = `
+"function _add_e027e0141e62(a, b) {
   return a + b;
 }
-console.log(_add_30b69bcb814b(2, 3));
+
+console.log(_add_e027e0141e62(2, 3));
+"
+`;
+
+exports[`Bundler import default function from a module 1`] = `
+"function _a_e027e0141e62() {
+  console.log(\\"From a\\");
+}
+
+function _main_e47883ab76bb() {
+  _a_e027e0141e62();
+}
+
+export { _main_e47883ab76bb as default };
 "
 `;
 
 exports[`Bundler import two consts from a module 1`] = `
-"const _MY_OBJECT_21825c70e8a0 = {
+"const _MY_OBJECT_e027e0141e62 = {
   key: 'value'
 };
-const _MY_ARRAY_e027e0141e62 = ['a', 'b'];
-function _main_e47883ab76bb() {
-  console.log(_MY_OBJECT_21825c70e8a0);
-  console.log(_MY_ARRAY_e027e0141e62);
+const _MY_ARRAY_e47883ab76bb = ['a', 'b'];
+
+function _main_21825c70e8a0() {
+  console.log(_MY_OBJECT_e027e0141e62);
+  console.log(_MY_ARRAY_e47883ab76bb);
 }
 
-export { _main_e47883ab76bb as default };
+export { _main_21825c70e8a0 as default };
 "
 `;

@@ -7,10 +7,9 @@ export default function parseJS(path: string) {
   const code = readFileSync(sourceFilename, {
     encoding: 'utf-8',
   });
-  const result = parse(code, {
+
+  return parse(code, {
     sourceType: 'module',
     sourceFilename,
   });
-
-  return { ast: result, code };
 }

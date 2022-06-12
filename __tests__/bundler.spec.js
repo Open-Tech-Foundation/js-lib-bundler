@@ -174,7 +174,7 @@ describe('Bundler', () => {
     expect(replaceFixedUID(output)).toMatchSnapshot();
   });
 
-  test('import a const made of variables imported from another file', () => {
+  test('import a const made of variables from a module', () => {
     jsonToFiles(tempDir, {
       'index.js': `import {z} from './constants';
       
@@ -182,8 +182,7 @@ describe('Bundler', () => {
         console.log(z)
       }`,
       'constants.js': `import {x, y} from './variables';
-      export const z = x + y;
-      export const z2 = 2;`,
+      export const z = x + y;`,
       'variables.js': `export const x = 1;
       export const y = 2`,
     });
@@ -191,10 +190,10 @@ describe('Bundler', () => {
     const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
-    expect(output).toMatchSnapshot();
+    expect(replaceFixedUID(output)).toMatchSnapshot();
   });
 
-  test('import a function from a module', () => {
+  test('import a named function from a module', () => {
     jsonToFiles(tempDir, {
       'index.js': `import {add} from './math';
 
@@ -208,6 +207,6 @@ describe('Bundler', () => {
     const output = readFileSync(join(tempDir, 'bundle.js'), {
       encoding: 'utf-8',
     });
-    expect(output).toMatchSnapshot();
+    expect(replaceFixedUID(output)).toMatchSnapshot();
   });
 });

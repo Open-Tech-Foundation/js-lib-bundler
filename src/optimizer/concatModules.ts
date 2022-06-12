@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { resolve, dirname } from 'path';
 import { randomUUID } from 'crypto';
 import traverse, { Node } from '@babel/traverse';
@@ -8,11 +9,9 @@ import parseJS from './parseJS';
 
 export default function concatModules(
   ast: unknown,
-  code: string,
   idMap: Map<string, Record<string, string>>,
   isSource = false
 ) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const modulePath = (ast as Program).loc?.filename;
 
@@ -24,8 +23,8 @@ export default function concatModules(
 
   traverse(ast as Node, {
     ImportDeclaration(path) {
-      const { ast, code } = parseJS(path.node.source.value + '.js');
-      output += concatModules(ast, code, idMap);
+      const ast = parseJS(path.node.source.value + '.js');
+      output += concatModules(ast, idMap);
     },
   });
 
@@ -40,8 +39,11 @@ export default function concatModules(
           const mapKey = resolve(dirname(modulePath), importPath);
 
           const idMapObj = idMap.get(mapKey) as Record<string, string>;
+          // @ts-ignore
           const idMapKey = binding.path.node.imported
-            ? binding.path.node.imported.name
+            ? // @ts-ignore
+
+              binding.path.node.imported.name
             : 'default';
           binding.scope.rename(id, idMapObj[idMapKey]);
         } else {
@@ -56,6 +58,7 @@ export default function concatModules(
       path.node.specifiers.forEach((s) => {
         const idMapObj = idMap.get(modulePath) as Record<string, string>;
         const exportedName = (s as ExportNamespaceSpecifier).exported.name;
+        // @ts-ignore
         const localName = (s as ExportNamespaceSpecifier).local.name;
         idMapObj[exportedName] = localName;
       });
@@ -73,5 +76,5 @@ export default function concatModules(
 
   output += generate(ast as Node).code;
 
-  return output + '\n';
+  return output;
 }
